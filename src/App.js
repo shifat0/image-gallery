@@ -1,5 +1,13 @@
+import Gallery from "./Components/Gallery/Gallery";
+import Navbar from "./Components/Navbar/Navbar";
+
 const App = () => {
-  return <div className="text-3xl">Hello World</div>;
+  return (
+    <div>
+      <Navbar />
+      <Gallery />
+    </div>
+  );
 };
 
 export default App;
