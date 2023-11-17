@@ -8,7 +8,7 @@ const Navbar = () => {
 
   return (
     <div className="bg-[#557C55] text-white p-5">
-      <div className="flex justify-between mx-5">
+      <div className="container mx-auto flex justify-between">
         <span className="text-xl font-bold">Photo Gallery</span>
         <div className="flex gap-8 text-black ">
           <div>
