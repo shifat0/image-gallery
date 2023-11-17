@@ -1,27 +1,36 @@
-import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { selectCategory } from "../../Redux/Actions";
+import { connect } from "react-redux";
 
-const categories = ["Animal", "Tech", "Nature"];
+const categories = ["Animal", "Cars", "Nature"];
 
-const Navbar = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  console.log(selectedCategory);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectCategory: (category) => dispatch(selectCategory(category)),
+  };
+};
+
+const Navbar = ({ selectCategory }) => {
+  let location = useLocation();
 
   return (
     <div className="bg-[#557C55] text-white p-5">
-      <div className="container mx-auto flex justify-between">
-        <span className="text-xl font-bold">Photo Gallery</span>
+      <div className="container mx-auto flex justify-between px-3">
+        <Link to="/gallery">
+          <span className="text-xl font-bold">Photo Gallery</span>
+        </Link>
         <div className="flex gap-8 text-black ">
-          <div>
+          {location.pathname === "/gallery" && (
             <select
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e) => selectCategory(e.target.value)}
               className="w-32 p-1 bg-[#F2FFE9] rounded-md cursor-pointer"
             >
-              <option>Category</option>
+              <option value="">Category</option>
               {categories.map((category, index) => (
                 <option key={index}>{category}</option>
               ))}
             </select>
-          </div>
+          )}
           <button className="bg-[#F2FFE9] px-5 py-1 rounded-md">Login</button>
         </div>
       </div>
@@ -29,4 +38,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default connect(null, mapDispatchToProps)(Navbar);
