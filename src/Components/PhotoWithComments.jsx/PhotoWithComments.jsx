@@ -47,7 +47,7 @@ const PhotoWithComments = () => {
           rows="4"
           className="border-2 border-[#557C55] rounded-lg"
         />
-        <button className="bg-[#557C55] text-white px-5 py-1 rounded-md w-1/6 mx-auto">
+        <button className="bg-[#557C55] text-white px-5 py-1 rounded-md w-1/5 sm:w-1/6 mx-auto">
           Submit
         </button>
       </div>

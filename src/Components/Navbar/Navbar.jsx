@@ -31,7 +31,9 @@ const Navbar = ({ selectCategory }) => {
               ))}
             </select>
           )}
-          <button className="bg-[#F2FFE9] px-5 py-1 rounded-md">Login</button>
+          <Link to="/login">
+            <button className="bg-[#F2FFE9] px-5 py-1 rounded-md">Login</button>
+          </Link>
         </div>
       </div>
     </div>
