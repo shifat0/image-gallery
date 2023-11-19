@@ -1,8 +1,17 @@
 import { Formik } from "formik";
 import Navbar from "../Components/Navbar/Navbar";
 import { Link } from "react-router-dom";
+import { authSignup } from "../Redux/Actions";
+import { connect } from "react-redux";
 
-const Signup = () => {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    authSignup: (name, email, password) =>
+      dispatch(authSignup(name, email, password)),
+  };
+};
+
+const Signup = ({ authSignup }) => {
   return (
     <>
       <Navbar />
@@ -32,7 +41,7 @@ const Signup = () => {
           return errors;
         }}
         onSubmit={(values) => {
-          console.log(values);
+          authSignup(values.name, values.email, values.password);
         }}
       >
         {({ values, errors, handleChange, handleSubmit }) => (
@@ -95,4 +104,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default connect(null, mapDispatchToProps)(Signup);

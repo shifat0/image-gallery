@@ -1,9 +1,20 @@
 import { Formik } from "formik";
 import React from "react";
 import Navbar from "../Components/Navbar/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { authLogin } from "../Redux/Actions";
+import { connect } from "react-redux";
 
-const Login = () => {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    authLogin: (email, password) => dispatch(authLogin(email, password)),
+  };
+};
+
+const Login = ({ authLogin }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   return (
     <>
       <Navbar />
@@ -25,7 +36,9 @@ const Login = () => {
           return errors;
         }}
         onSubmit={(values) => {
-          console.log(values);
+          authLogin(values.email, values.password);
+          if (!location.state === null) navigate(location.state.from.pathname);
+          else navigate("/");
         }}
       >
         {({ values, errors, handleChange, handleSubmit }) => (
@@ -70,4 +83,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);

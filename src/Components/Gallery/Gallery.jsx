@@ -31,7 +31,7 @@ const Gallery = ({ category }) => {
               <Link to={`${item.id}`} key={index}>
                 <div className="relative mx-auto shadow-md">
                   <img
-                    className="w-auto h-80 object-cover"
+                    className="w-full h-80 object-cover"
                     src={item.img}
                     alt={item.index}
                     loading="lazy"
