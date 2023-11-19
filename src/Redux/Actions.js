@@ -22,11 +22,11 @@ export const selectCategory = (category) => {
   };
 };
 
-export const authSuccess = (name, token, userId) => {
+export const authSuccess = (username, token, userId) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     payload: {
-      name: name,
+      username: username,
       token: token,
       userId: userId,
     },
@@ -61,6 +61,7 @@ export const authLogin = (email, password) => {
         );
         dispatch(authLoading(false));
         localStorage.setItem("token", userCredential.user.accessToken);
+        localStorage.setItem("username", userCredential.user.displayName);
       })
       .catch((err) => {
         dispatch(authLoading(false));
@@ -86,6 +87,7 @@ export const authSignup = (name, email, password) => {
           );
           dispatch(authLoading(false));
           localStorage.setItem("token", userCredential.user.accessToken);
+          localStorage.setItem("username", userCredential.user.displayName);
         });
       })
       .catch((err) => {
@@ -97,8 +99,7 @@ export const authSignup = (name, email, password) => {
 
 export const authLogout = () => {
   localStorage.removeItem("token");
-  localStorage.removeItem("userId");
-  localStorage.removeItem("expiresIn");
+  localStorage.removeItem("username");
   return {
     type: actionTypes.AUTH_LOGOUT,
   };

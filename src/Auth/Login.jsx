@@ -5,19 +5,26 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { authLogin } from "../Redux/Actions";
 import { connect } from "react-redux";
 
+const mapStateToProps = (state) => {
+  return {
+    errMessage: state.errMessage,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     authLogin: (email, password) => dispatch(authLogin(email, password)),
   };
 };
 
-const Login = ({ authLogin }) => {
+const Login = ({ authLogin, errMessage }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
   return (
     <>
       <Navbar />
+      {errMessage ? alert(errMessage) : ""}
       <h1 className="text-4xl text-center mt-28 mb-10">Login</h1>
       <Formik
         initialValues={{ email: "", password: "" }}
@@ -83,4 +90,4 @@ const Login = ({ authLogin }) => {
   );
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

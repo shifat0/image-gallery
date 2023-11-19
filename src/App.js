@@ -6,22 +6,20 @@ import Signup from "./Auth/Signup";
 
 const App = () => {
   const location = useLocation();
-  const localToken = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
+
   return (
     <Routes>
       <Route path="*" element={<Navigate to="/gallery" />} />
       <Route path="/gallery" element={<Home />} />
-      <Route
-        path="/login"
-        element={localToken ? <Navigate to="/" /> : <Login />}
-      />
+      <Route path="/login" element={token ? <Navigate to="/" /> : <Login />} />
       <Route
         path="/signup"
-        element={localToken ? <Navigate to="/" /> : <Signup />}
+        element={token ? <Navigate to="/" /> : <Signup />}
       />
       <Route
         element={
-          localToken ? (
+          token ? (
             <Outlet />
           ) : (
             <Navigate to="/login" state={{ from: location }} />

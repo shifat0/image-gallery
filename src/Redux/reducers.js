@@ -19,7 +19,7 @@ export const reducers = (state = INITIAL_STATE, action) => {
     case actionTypes.AUTH_SUCCESS:
       return {
         ...state,
-        username: action.payload.name,
+        username: action.payload.username,
         userId: action.payload.userId,
         token: action.payload.token,
       };

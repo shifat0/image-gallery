@@ -15,7 +15,7 @@ const PhotoWithComments = ({ username, userId }) => {
   const params = useParams();
   const [feedback, setFeedback] = useState({
     feedback: "",
-    username: username,
+    username: localStorage.getItem("username"),
     userId: userId,
     imageId: params.id,
     date: new Date(),
@@ -30,7 +30,7 @@ const PhotoWithComments = ({ username, userId }) => {
     axios
       .get(`http://localhost:5000/feedbacks?imageId=${params.id}`)
       .then((res) => setFetchedFeedback(res.data));
-  }, [params.id]);
+  }, [params.id, feedback]);
 
   const handleChange = (e) => {
     setFeedback((prev) => {
@@ -40,9 +40,9 @@ const PhotoWithComments = ({ username, userId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post("http://localhost:5000/feedbacks", feedback).then((res) => {
-      setFetchedFeedback((prev) => {
-        return [...prev, res.data];
-      });
+      // setFetchedFeedback((prev) => {
+      //   return [...prev, res.data];
+      // });
       setFeedback((prev) => {
         return { ...prev, feedback: "" };
       });
@@ -50,7 +50,7 @@ const PhotoWithComments = ({ username, userId }) => {
   };
 
   return (
-    <div className="container mx-auto my-5">
+    <div className="container mx-auto px-7 my-5">
       <div className="relative mx-auto shadow-md">
         <img
           className="w-full h-80 object-cover"
@@ -68,7 +68,7 @@ const PhotoWithComments = ({ username, userId }) => {
         {fetchedFeedback.map((feedback) => (
           <div key={feedback.id}>
             <div className="flex gap-8 mt-5">
-              <h5>{feedback.username}</h5>
+              <h5 className="font-bold capitalize">{feedback.username}</h5>
               <span className="italic">
                 {new Date(feedback.date).toLocaleDateString()}
               </span>

@@ -1,8 +1,14 @@
 import { Formik } from "formik";
 import Navbar from "../Components/Navbar/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authSignup } from "../Redux/Actions";
 import { connect } from "react-redux";
+
+const mapStateToProps = (state) => {
+  return {
+    errMessage: state.errMessage,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -11,10 +17,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const Signup = ({ authSignup }) => {
+const Signup = ({ authSignup, errMessage }) => {
+  const navigate = useNavigate();
   return (
     <>
       <Navbar />
+      {errMessage ? alert(errMessage) : ""}
       <h1 className="text-4xl text-center mt-28 mb-10">Signup</h1>
       <Formik
         initialValues={{
@@ -42,6 +50,7 @@ const Signup = ({ authSignup }) => {
         }}
         onSubmit={(values) => {
           authSignup(values.name, values.email, values.password);
+          if (localStorage.getItem("token")) navigate("/");
         }}
       >
         {({ values, errors, handleChange, handleSubmit }) => (
@@ -104,4 +113,4 @@ const Signup = ({ authSignup }) => {
   );
 };
 
-export default connect(null, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
