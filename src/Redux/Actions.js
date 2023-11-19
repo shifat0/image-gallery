@@ -95,7 +95,7 @@ export const authSignup = (name, email, password) => {
   };
 };
 
-export const logout = () => {
+export const authLogout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userId");
   localStorage.removeItem("expiresIn");

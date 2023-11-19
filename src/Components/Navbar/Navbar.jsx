@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { selectCategory } from "../../Redux/Actions";
+import { authLogout, selectCategory } from "../../Redux/Actions";
 import { connect } from "react-redux";
 
 const categories = ["Animal", "Cars", "Nature"];
@@ -7,11 +7,13 @@ const categories = ["Animal", "Cars", "Nature"];
 const mapDispatchToProps = (dispatch) => {
   return {
     selectCategory: (category) => dispatch(selectCategory(category)),
+    authLogout: () => dispatch(authLogout()),
   };
 };
 
-const Navbar = ({ selectCategory }) => {
+const Navbar = ({ selectCategory, authLogout }) => {
   let location = useLocation();
+  const token = localStorage.getItem("token");
 
   return (
     <div className="bg-[#557C55] text-white p-5">
@@ -31,9 +33,22 @@ const Navbar = ({ selectCategory }) => {
               ))}
             </select>
           )}
-          <Link to="/login">
-            <button className="bg-[#F2FFE9] px-5 py-1 rounded-md">Login</button>
-          </Link>
+          {token ? (
+            <Link to="/">
+              <button
+                className="bg-[#F2FFE9] px-5 py-1 rounded-md"
+                onClick={authLogout}
+              >
+                Logout
+              </button>
+            </Link>
+          ) : (
+            <Link to="/login">
+              <button className="bg-[#F2FFE9] px-5 py-1 rounded-md">
+                Login
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

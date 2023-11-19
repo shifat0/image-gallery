@@ -39,11 +39,14 @@ const PhotoWithComments = ({ username, userId }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/feedbacks", feedback).then((res) =>
+    axios.post("http://localhost:5000/feedbacks", feedback).then((res) => {
       setFetchedFeedback((prev) => {
         return [...prev, res.data];
-      })
-    );
+      });
+      setFeedback((prev) => {
+        return { ...prev, feedback: "" };
+      });
+    });
   };
 
   return (
@@ -59,7 +62,7 @@ const PhotoWithComments = ({ username, userId }) => {
         </span>
       </div>
 
-      <div className="my-10 px-5 sm:px-0">
+      <div className="my-10 mx-5 sm:px-0">
         <span className="font-bold">Feedbacks</span>
         <hr />
         {fetchedFeedback.map((feedback) => (
@@ -75,7 +78,7 @@ const PhotoWithComments = ({ username, userId }) => {
         ))}
       </div>
 
-      <form className="my-5 px-5 sm:px-0 flex flex-col gap-3">
+      <form className="my-5 mx-5 sm:px-0 flex flex-col gap-3">
         <label className="font-bold">Leave Your Feedback Here</label>
         <textarea
           name="feedback"
@@ -83,6 +86,7 @@ const PhotoWithComments = ({ username, userId }) => {
           rows="4"
           className="border-2 border-[#557C55] rounded-lg"
           onChange={(e) => handleChange(e)}
+          value={feedback.feedback}
         />
         <button
           type="submit"
